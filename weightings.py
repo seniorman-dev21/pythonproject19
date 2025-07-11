@@ -7,7 +7,6 @@ from sklearn.linear_model import ElasticNet
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
-import numpy as np
 
 data = pd.read_csv("fdata.csv")
 print(data)
@@ -57,13 +56,13 @@ def split_data(X_scaled,y):
     # Initialize Elastic Net and perform grid search
 def values():
     param_grid = {
-        "alpha": [0.1, 0.5, 1.0],
-        "l1_ratio": [0.2, 0.5, 0.8]
+        "alpha": [0.001,0.1, 0.5, 1.0],
+        "l1_ratio": [0.1,0.2, 0.5, 0.8]
     }
     return param_grid
 
 def elastic_net(X_train,y_train,param_grid):
-    elastic_net = ElasticNet(max_iter=1000)
+    elastic_net = ElasticNet(max_iter=10000)
     grid_search = GridSearchCV(elastic_net, param_grid = param_grid, cv=5, scoring="neg_mean_squared_error")
     grid_search.fit(X_train, y_train)
     return grid_search
@@ -77,6 +76,43 @@ def evaluate_performance(best_model,X_test,y_test):
     y_pred = best_model.predict(X_test)
     print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
     print("R-squared:", r2_score(y_test, y_pred))
+#code from chat gpt
+def get_coefficients(model, feature_names):
+    """Returns a list of (feature, coefficient) tuples with clean float values."""
+    coefs = model.coef_
+    print([(name, float(coef)) for name, coef in zip(feature_names, coefs)])
+    return [(name, float(coef))  for name, coef in zip(feature_names, coefs)]
 
 
 
+def everything_together(df):
+# Step 1: Clean the data
+    df = clean_data_set(df)
+
+    # Step 2: Extract features and target
+    X, y = preprocess_data(df)
+
+    # Step 3: Scale the features
+    X_scaled = scale_features(X)
+
+    # Step 4: Split the data
+    X_train, X_test, y_train, y_test = split_data(X_scaled, y)
+
+    # Step 5: Get hyperparameters
+    param_grid = values()
+
+    # Step 6: Train the model with grid search
+    grid_search = elastic_net(X_train, y_train, param_grid)
+
+    # Step 7: Get the best model
+    best_model = best_performance(grid_search)
+
+    # Step 8: Evaluate the model
+    evaluate_performance(best_model, X_test, y_test)
+
+    get_coefficients(best_model, stat)
+
+
+
+
+everything_together(data)
