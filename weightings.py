@@ -3,6 +3,12 @@
 #1st step
 #we want to load our database using the pandas library
 import pandas as pd
+from sklearn.linear_model import ElasticNet
+from sklearn.model_selection import GridSearchCV, train_test_split
+from sklearn.metrics import mean_squared_error, r2_score
+from sklearn.preprocessing import StandardScaler
+import numpy as np
+
 data = pd.read_csv("fdata.csv")
 print(data)
 
@@ -12,14 +18,65 @@ print(data)
 #data = data[(data[['Appearances']] != 0).any(axis=1)]
 #print(data)
 def clean_data_set(df):
+    """cleans any data where appearances is equal to zero in our dataframe"""
     df = df[df['Appearances'] != 0].copy()
     return df
-
 
 #in this code snippet we drop all data in our dataframe where the data in the appearance column is equal to zero.the
 #inplace parameter is to execute this change to our data frame
 data =clean_data_set(data)
-print(data)
+#we call our function and load our data set called fdata which is a csv file
 
-#this code snippet is inspired by stack overflow
+from Realwork import stat
+print(stat)
+#here in this piece of code the list stat is saved in a different file to save space and ensure code clarity this is then
+#imported using the python import module.
+def preprocess_data(data):
+    X = data[stat]
+
+    y = data["Wins"]
+    return X,y
+#now that we have the data and the columns we want to use w e need to apply elastic net regression
+# these specific columns we will create
+#another function for this task
+
+
+
+    # Load and preprocess the data
+
+    # Scale features
+def scale_features(X):
+    scaler = StandardScaler()
+    X_scaled = scaler.fit_transform(X)
+    return X_scaled
+
+    # Split data
+def split_data(X_scaled,y):
+    X_train, X_test, y_train, y_test = train_test_split(X_scaled, y, test_size=0.2, random_state=42)
+    return X_train, X_test, y_train, y_test
+    # Initialize Elastic Net and perform grid search
+def values():
+    param_grid = {
+        "alpha": [0.1, 0.5, 1.0],
+        "l1_ratio": [0.2, 0.5, 0.8]
+    }
+    return param_grid
+
+def elastic_net(X_train,y_train,param_grid):
+    elastic_net = ElasticNet(max_iter=1000)
+    grid_search = GridSearchCV(elastic_net, param_grid = param_grid, cv=5, scoring="neg_mean_squared_error")
+    grid_search.fit(X_train, y_train)
+    return grid_search
+def best_performance(grid_search):
+    # Best parameters
+    best_model = grid_search.best_estimator_
+    print("Best Parameters:", grid_search.best_params_)
+    return best_model
+def evaluate_performance(best_model,X_test,y_test):
+    # Evaluate performance
+    y_pred = best_model.predict(X_test)
+    print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
+    print("R-squared:", r2_score(y_test, y_pred))
+
+
 
