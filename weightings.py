@@ -37,9 +37,11 @@ X_test = scaler.transform(X_test)
 
 from sklearn.linear_model import ElasticNet
 
-elastic_net = ElasticNet(max_iter=10000)
-elastic_net.fit(X_train,y_train)
-y_pred = elastic_net.predict(X_test)
+#data = data[(data[['Appearances']] != 0).any(axis=1)]
+#print(data)
+def clean_data_set(df):
+    df = df[df['Appearances'] != 0].copy()
+    return df
 
 from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
 mae =mean_absolute_error(y_test,y_pred)
