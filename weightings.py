@@ -2,6 +2,7 @@
 #designing a weighted average
 #1st step
 #we want to load our database using the pandas library
+import numpy as np
 import pandas as pd
 from sklearn.linear_model import ElasticNet
 from sklearn.model_selection import GridSearchCV, train_test_split
@@ -19,6 +20,7 @@ print(data)
 def clean_data_set(df):
     """cleans any data where appearances is equal to zero in our dataframe"""
     df = df[df['Appearances'] != 0].copy()
+
     return df
 
 #in this code snippet we drop all data in our dataframe where the data in the appearance column is equal to zero.the
@@ -27,7 +29,9 @@ data =clean_data_set(data)
 #we call our function and load our data set called fdata which is a csv file
 
 from Realwork import stat
-print(stat)
+#print(stat)
+
+
 #here in this piece of code the list stat is saved in a different file to save space and ensure code clarity this is then
 #imported using the python import module.
 def preprocess_data(data):
@@ -56,13 +60,13 @@ def split_data(X_scaled,y):
     # Initialize Elastic Net and perform grid search
 def values():
     param_grid = {
-        "alpha": [0.001,0.1, 0.5, 1.0],
-        "l1_ratio": [0.1,0.2, 0.5, 0.8]
+        "alpha": [0.1, 0.5, 1.0,5,0.8,10],
+        "l1_ratio": [0.1,0.2, 0.5,0.6,0.7, 0.8]
     }
     return param_grid
 
 def elastic_net(X_train,y_train,param_grid):
-    elastic_net = ElasticNet(max_iter=10000)
+    elastic_net = ElasticNet(max_iter=10000000)
     grid_search = GridSearchCV(elastic_net, param_grid = param_grid, cv=5, scoring="neg_mean_squared_error")
     grid_search.fit(X_train, y_train)
     return grid_search
@@ -76,11 +80,13 @@ def evaluate_performance(best_model,X_test,y_test):
     y_pred = best_model.predict(X_test)
     print("Mean Squared Error:", mean_squared_error(y_test, y_pred))
     print("R-squared:", r2_score(y_test, y_pred))
-#code from chat gpt
+#code from chatgpt
 def get_coefficients(model, feature_names):
     """Returns a list of (feature, coefficient) tuples with clean float values."""
     coefs = model.coef_
-    print([(name, float(coef)) for name, coef in zip(feature_names, coefs)])
+    for name, coef in zip(feature_names, coefs):
+        print((name, float(coef)))
+
     return [(name, float(coef))  for name, coef in zip(feature_names, coefs)]
 
 
@@ -113,6 +119,24 @@ def everything_together(df):
     get_coefficients(best_model, stat)
 
 
-
-
+print("--------------THIS IS FOR GENERAL----------------")
 everything_together(data)
+
+midfielder = data[data['Position'] == 'Midfielder']
+print("------------THIS IS FOR MF-----------------------")
+everything_together(midfielder)
+
+gk = data[data['Position'] == 'Goalkeeper']
+print("------------THIS IS FOR gk-----------------------")
+everything_together(gk)
+
+dfn = data[data['Position'] == 'Defender']
+print("------------THIS IS FOR DF-----------------------")
+everything_together(dfn)
+
+
+st = data[data['Position'] == 'Forward']
+print("------------THIS IS FOR FW-----------------------")
+everything_together(st)
+
+
