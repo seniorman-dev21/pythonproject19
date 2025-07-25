@@ -20,6 +20,7 @@ print(data)
 def clean_data_set(df):
     """cleans any data where appearances is equal to zero in our dataframe"""
     df = df[df['Appearances'] != 0].copy()
+    #df.columns = df.columns.astype(str)
 
     return df
 
@@ -35,10 +36,14 @@ from Realwork import stat
 #here in this piece of code the list stat is saved in a different file to save space and ensure code clarity this is then
 #imported using the python import module.
 def preprocess_data(data):
-    X = data[stat]
+    data[stat] = data[stat].fillna(0)
+
+    #X = data[stat].div(data["Appearances"], axis=0)
+    X = data[stat].div(90)
+    #X = X.fillna(0)
 
     y = data["Wins"]
-    return X,y
+    return X, y
 #now that we have the data and the columns we want to use w e need to apply elastic net regression
 # these specific columns we will create
 #another function for this task
@@ -50,6 +55,7 @@ def preprocess_data(data):
     # Scale features
 def scale_features(X):
     scaler = StandardScaler()
+    X.columns = X.columns.astype(str)
     X_scaled = scaler.fit_transform(X)
     return X_scaled
 
@@ -60,8 +66,8 @@ def split_data(X_scaled,y):
     # Initialize Elastic Net and perform grid search
 def values():
     param_grid = {
-        "alpha": [0.1, 0.5, 1.0,5,0.8,10],
-        "l1_ratio": [0.1,0.2, 0.5,0.6,0.7, 0.8]
+        "alpha": [0.01,0.1, 0.5, 1.0,5,0.8,10],
+        "l1_ratio": [0.1,0.2, 0.5,0.7]
     }
     return param_grid
 
@@ -82,12 +88,26 @@ def evaluate_performance(best_model,X_test,y_test):
     print("R-squared:", r2_score(y_test, y_pred))
 #code from chatgpt
 def get_coefficients(model, feature_names):
-    """Returns a list of (feature, coefficient) tuples with clean float values."""
+    """
+    Returns a list of (feature, normalized_weight) tuples with clean float values.
+    Also prints the normalized weights (not the raw coefficients).
+    """
     coefs = model.coef_
-    for name, coef in zip(feature_names, coefs):
-        print((name, float(coef)))
+    #this needs to be adjusted
+    # Handle multiclass (e.g., logistic regression)
+    if coefs.ndim == 2 and coefs.shape[0] > 1:
+        coefs = coefs[0]
 
-    return [(name, float(coef))  for name, coef in zip(feature_names, coefs)]
+    coefs = coefs.flatten()
+    total = sum(abs(coefs))  # use abs to ensure meaningful relative importance
+    weights = coefs / total
+
+    for name, weight in zip(feature_names, weights):
+        print((name, float(weight)))
+        #needs to be adjusted ends here
+
+    return [(name, float(weight)) for name, weight in zip(feature_names, weights)]
+
 
 
 
@@ -138,5 +158,12 @@ everything_together(dfn)
 st = data[data['Position'] == 'Forward']
 print("------------THIS IS FOR FW-----------------------")
 everything_together(st)
+
+
+d=data[['Saves', 'Clean sheets']].corr()
+print(d)
+
+
+
 
 
