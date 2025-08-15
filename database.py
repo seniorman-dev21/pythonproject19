@@ -35,6 +35,30 @@ CREATE TABLE IF NOT EXISTS rating (
     
 """)
 
+c.execute("""
+CREATE TABLE IF NOT EXISTS stats (
+    stat_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    stat_name TEXT NOT NULL)
+
+""")
+
+c.execute("""
+CREATE TABLE IF NOT EXISTS submission (
+    submission_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    player_id INTEGER NOT NULL,
+    stat_id INTEGER NOT NULL,
+    stat_value INTEGER NOT NULL,
+    time TEXT DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(user_id),
+    FOREIGN KEY (player_id) REFERENCES player(player_id),
+    FOREIGN KEY (stat_id) REFERENCES stats(stat_id)
+)
+""")
+
+
+
+
 conn.commit()
 conn.close()
 
