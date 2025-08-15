@@ -37,7 +37,7 @@ def login():
         if user:
             session['username'] = username
             session['user_id'] = user_id
-            return render_template('dashboard.html')
+            return redirect(url_for('home'))
         else:
             msg = "Incorrect username or user ID."
             return render_template('index.html', msg=msg)
@@ -115,6 +115,10 @@ def register():
 
     return render_template('register.html', msg=msg, new_id=None)
 
+@app.route("/edit_player",methods =["GET","POST"])
+def edit_player():
+    pass
+
 @app.route("/create_player", methods=["GET", "POST"])
 def create_player():
     from Realwork import stat
@@ -179,9 +183,9 @@ def create_player():
                 if result:
                     stat_id = result[0]
                     cursor.execute("""
-                        INSERT INTO submission (user_id, player_id, stat_id, stat_value)
-                        VALUES (?, ?, ?, ?)
-                    """, (user_id, player_id, stat_id, stat_val))
+                        INSERT INTO submission (user_id, player_id, stat_id, stat_value,rating_value)
+                        VALUES (?, ?, ?, ?,?)
+                    """, (user_id, player_id, stat_id, stat_val,rating))
 
             conn.commit()
             conn.close()

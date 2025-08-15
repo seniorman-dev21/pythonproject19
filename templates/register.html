@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="static/style.css">
+</head>
+<body>
+<div class="center-wrapper">
+        <div class="my_div">
+    <center>
+        <h1>Signup Page</h1>
+        <form method="POST" action="/register">
+            <input type="text" name="username" placeholder="Enter username" required>
+            <br><br>
+            <input type="submit" value="Register">
+        </form>
+        {% if msg %}
+            <p style="color: green;">{{ msg }}</p>
+        {% endif %}
+    </center>
+    <a href="/">Log In</a>
+        </div>
+</div>
+</body>
+</html>

@@ -2,24 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rate your Player </title>
+    <title>Rate your Player</title>
+    <!-- Link to CSS in static folder -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+  <h2>RATE YOUR PLAYER</h2>
 
   <form method="POST" action="/create_player">
     <input type="text" name="playername" placeholder="Enter player name" required>
-  <label for="position">Choose Position:</label><br>
+    <label for="position">Choose Position:</label><br>
     <select name="position" id="position">
       {% for pos in positions %}
         <option value="{{ pos }}">{{ pos }}</option>
       {% endfor %}
     </select><br><br>
-  {% for s in stat %}
-    <label for="{{ s }}"><strong>{{ s.capitalize() }}</strong></label><br>
-    <input type="number" id="{{ s }}" name="{{ s }}" placeholder="{{ s }}" min="0"><br><br>
-  {% endfor %}
-  <input type="submit" value="Submit">
-</form>
+    {% for s in stat %}
+      <label for="{{ s }}"><strong>{{ s.capitalize() }}</strong></label><br>
+      <input type="number" id="{{ s }}" name="{{ s }}" placeholder="{{ s }}" min="0"><br><br>
+    {% endfor %}
+    <input type="submit" value="Submit">
+  </form>
+
   {% if stat_dict %}
     <h3>Submitted Stats:</h3>
     <ul>
@@ -28,12 +32,15 @@
       {% endfor %}
     </ul>
   {% endif %}
+
   {% if player_name %}
-  <p><strong>Player:</strong> {{ player_name }}</p>
-{% endif %}
-{% if selected_position %}
-  <p><strong>Position:</strong> {{ selected_position }}</p>
-{% endif %}
-<a href="logged_in">Dashboard</a>
+    <p><strong>Player:</strong> {{ player_name }}</p>
+  {% endif %}
+
+  {% if selected_position %}
+    <p><strong>Position:</strong> {{ selected_position }}</p>
+  {% endif %}
+
+  <a href="logged_in" class="dashboard-link">Dashboard</a>
 </body>
 </html>

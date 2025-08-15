@@ -1,0 +1,537 @@
+/* ===== Body Styles ===== */
+body {
+    background: #0c0c0c; /* dark, like a night stadium */
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* ===== Flex Centering Container ===== */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #0c0c0c, #1a1a1a); /* dark stadium gradient */
+}
+
+/* ===== Main Form Card ===== */
+.my_div {
+    background: #121212;
+    border: 2px solid limegreen;         /* Football pitch color */
+    padding: 30px;
+    width: 350px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(50, 205, 50, 0.25); /* subtle glow */
+}
+
+/* ===== Heading ===== */
+h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+/* ===== Input Fields ===== */
+.login-form input[type="text"],
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #1e1e1e;
+    color: white;
+    outline: none;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Focus effect */
+.login-form input[type="text"]:focus,
+.login-form input[type="password"]:focus {
+    border-color: limegreen;
+}
+
+/* ===== Submit Button ===== */
+.login-form input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: limegreen;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+.login-form input[type="submit"]:hover {
+    background-color: #32cd32;
+}
+
+/* ===== Register Link ===== */
+a {
+    color: limegreen;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* ===== Base Styles ===== */
+body {
+    background: #0c0c0c;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* ===== Flex Centering ===== */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to bottom right, #0c0c0c, #1a1a1a);
+}
+
+/* ===== Shared Form Container Style ===== */
+.my_div {
+    background: #121212;
+    border: 2px solid limegreen;
+    padding: 30px;
+    width: 350px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(50, 205, 50, 0.25);
+}
+
+/* ===== Headings ===== */
+h1 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+}
+
+/* ===== Inputs (used by login and register forms) ===== */
+form input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #1e1e1e;
+    color: white;
+    outline: none;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+form input[type="text"]:focus {
+    border-color: limegreen;
+}
+
+/* ===== Submit Button ===== */
+form input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: limegreen;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    background-color: #32cd32;
+}
+
+/* ===== Link Styling ===== */
+a {
+    color: limegreen;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+
+/* ===== Base Styles ===== */
+body {
+    background: #0c0c0c;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* ===== Flex Centering ===== */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #0c0c0c, #1a1a1a);
+}
+
+/* ===== Main Form Card ===== */
+.my_div {
+    background: #121212;
+    border: 2px solid limegreen; /* Football pitch color */
+    padding: 30px;
+    width: 380px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(50, 205, 50, 0.25); /* subtle glow */
+}
+
+/* ===== Headings ===== */
+h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 1.2rem;
+    color: limegreen;
+}
+
+/* ===== Labels ===== */
+form label {
+    font-weight: bold;
+    color: limegreen;
+}
+
+/* ===== Input Fields ===== */
+form input[type="text"],
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #1e1e1e;
+    color: white;
+    outline: none;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Focus effect */
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus {
+    border-color: limegreen;
+}
+
+/* ===== Submit Button ===== */
+form input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: limegreen;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+form input[type="submit"]:hover {
+    background-color: #32cd32;
+}
+
+/* ===== Stats List ===== */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background: #1e1e1e;
+    margin-bottom: 5px;
+    padding: 8px;
+    border-radius: 6px;
+    border-left: 4px solid limegreen;
+}
+
+/* ===== Link Styling ===== */
+a {
+    color: limegreen;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* ===== Base Styles ===== */
+body {
+    background: #0c0c0c;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+}
+
+/* ===== Center Wrapper ===== */
+.center-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #0c0c0c, #1a1a1a);
+}
+
+/* ===== Main Form Card ===== */
+.my_div {
+    background: #121212;
+    border: 2px solid limegreen;
+    padding: 30px;
+    width: 350px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(50, 205, 50, 0.25);
+}
+
+/* ===== Heading ===== */
+h3 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+    color: limegreen;
+}
+
+/* ===== Labels ===== */
+form label {
+    font-weight: bold;
+    color: limegreen;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* ===== Input Fields & Select ===== */
+form input[type="text"],
+form input[type="number"],
+form select {
+    width: 100%;
+    padding: 10px;
+    font-size: 15px;
+    border-radius: 8px;
+    border: 1px solid #333;
+    background-color: #1e1e1e;
+    color: white;
+    outline: none;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Custom select arrow styling */
+form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='limegreen' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 18px;
+    padding-right: 35px;
+}
+
+/* Focus effect */
+form input[type="text"]:focus,
+form input[type="number"]:focus,
+form select:focus {
+    border-color: limegreen;
+}
+
+/* ===== Submit Button ===== */
+form input[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: limegreen;
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect */
+form input[type="submit"]:hover {
+    background-color: #32cd32;
+}
+
+/* ===== Submitted Stats List ===== */
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    background: #1e1e1e;
+    margin-bottom: 5px;
+    padding: 8px;
+    border-radius: 6px;
+    border-left: 4px solid limegreen;
+}
+
+/* ===== Links ===== */
+a {
+    color: limegreen;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+
+/* ===== Body & Base Styles ===== */
+body {
+    background: #0c0c0c; /* dark stadium */
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* ===== Dashboard Wrapper ===== */
+.dashboard-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #121212;
+    border: 2px solid limegreen;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(50, 205, 50, 0.25);
+}
+
+/* ===== Headings ===== */
+h1, h2 {
+    color: limegreen;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+/* ===== Table Styling ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background: #1e1e1e;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+}
+
+table th {
+    background-color: #121212;
+    color: limegreen;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #1a1a1a;
+}
+
+table tr:hover {
+    background-color: #2a2a2a;
+}
+
+/* ===== Buttons ===== */
+button {
+    background-color: limegreen;
+    color: black;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #32cd32;
+}
+
+/* ===== Dashboard Actions ===== */
+.dashboard-actions {
+    margin-top: 20px;
+}
+
+.dashboard-actions a {
+    color: limegreen;
+    font-weight: bold;
+    text-decoration: none;
+    margin-right: 15px;
+}
+
+.dashboard-actions a:hover {
+    text-decoration: underline;
+}
+
+.dashboard-actions form {
+    display: inline;
+}
+
+/* ===== Responsive Table ===== */
+@media screen and (max-width: 600px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    tr {
+        margin-bottom: 15px;
+    }
+
+    th {
+        text-align: left;
+    }
+}
+
+.dashboard-link {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: limegreen;
+    color: black;
+    font-weight: bold;
+    font-size: 1.1rem;  /* bigger font size */
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.dashboard-link:hover {
+    background-color: #32cd32;
+}

@@ -9,7 +9,7 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.preprocessing import StandardScaler
 
-data = pd.read_csv("fdata.csv")
+data = pd.read_csv("fdata(1).csv")
 print(data)
 
 #now that the data has been loaded unto the dataframe we need to clean the data and remove any values where appearances

@@ -56,7 +56,7 @@ class User:
         stat_value = {}
         for each_stat in rw.stat:
             num =input(f"Please enter a value for {each_stat}")
-            stat_value[each_stat] = math.log1p(int(num))
+            stat_value[each_stat] = float(num)
         return stat_value
 
     def create_a_new_player(self):
@@ -120,6 +120,9 @@ class Everything:
         self.rating = rating
 
     def store(self):
+        conn = sqlite3.connect("general.db")
+        c = conn.cursor()
+
         c.execute("SELECT * FROM player where player_id=?", (self.player_id,))
         row = c.fetchone()
         c.execute("SELECT * FROM user where user_id=?", (self.user_id,))
