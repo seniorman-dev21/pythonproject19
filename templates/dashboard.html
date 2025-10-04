@@ -4,48 +4,62 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link rel="stylesheet" href="static/style.css">
-
 </head>
 <body>
- <div class="dashboard-wrapper">
+<div class="dashboard-wrapper">
     <h1>Welcome, {{ name }}!</h1>
     <h2>Player Ratings</h2>
+
     {% if ratings %}
         <table border="1" cellpadding="8">
             <thead>
                 <tr>
+                    <th>Player Id</th>
                     <th>Player Name</th>
                     <th>Rating</th>
                     <th>Rated By</th>
-
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
-    {% for r in ratings %}
-        <tr>
-            <td>{{ r['player_name'] }}</td>
-            <td>{{ r['rating_value'] }}</td>
-            <td>{{ r['user_name'] }}</td>
-            <td>
-                <form action="{{ url_for('delete_rating') }}" method="POST" style="display:inline;">
-                    <input type="hidden" name="rating_id" value="{{ r['rating_id'] }}">
-                    <button type="submit">Delete</button>
-                </form>
-            </td>
-        </tr>
-    {% endfor %}
-</tbody>
+                {% for r in ratings %}
+                <tr>
+                    <td>{{ r['player_id'] }}</td>
+                    <td>{{ r['player_name'] }}</td>
+                    <td>{{ r['rating_value']|round(2) }}</td>
+                    <td>{{ r['user_name'] }}</td>
+                    <td>
+                        <!-- Delete Button -->
+                        <form action="{{ url_for('delete_rating') }}" method="POST" style="display:inline;">
+                            <input type="hidden" name="rating_id" value="{{ r['rating_id'] }}">
+                            <button type="submit">Delete</button>
+                        </form>
+
+                        <!-- Edit Button -->
+                        <form action="{{ url_for('edit_player') }}" method="GET" style="display:inline;">
+                            <input type="hidden" name="player_id" value="{{ r['player_id'] }}">
+                            <button type="submit">Edit</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     {% else %}
         <p>No ratings available yet.</p>
     {% endif %}
+
+    <!-- Dashboard Actions -->
     <div class="dashboard-actions">
         <br>
+        <!-- Manual Create Player -->
         <a href="{{ url_for('create_player') }}">Create Player</a> |
-        <form action="{{ url_for('logout') }}" method="POST" style="display: inline;">
+
+        <!-- Logout -->
+        <form action="{{ url_for('logout') }}" method="POST" style="display:inline;">
             <button type="submit">Logout</button>
         </form>
     </div>
- </div>
+</div>
 </body>
 </html>

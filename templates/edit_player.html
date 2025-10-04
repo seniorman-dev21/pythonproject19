@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Player {{ player_id }}</title>
+</head>
+<body>
+<form method="POST" action="/create_player">
+
+    <table>
+        <tr>
+            <td>
+            {% for key ,value  in stats_to_update.items() %}
+                <label for="{{ value }}"><strong>{{ value.capitalize() }}</strong></label><br>
+                <input type="number" id="{{ key }}" name="{{ value}}" placeholder="{{ key }}"  value="{{key}}" min="0"><br><br>
+            {% endfor %}
+            <input type="submit" value="Submit">
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

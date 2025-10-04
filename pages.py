@@ -1,44 +1,33 @@
-import streamlit as st
-from player_class import *
-from player_class import Midfielder
+import sqlite3
+def update():
+    conn = sqlite3.connect("general.db")
+    c= conn.cursor()
+    player_id = 59
+    c.execute("""SELECT submission.stat_value,
+            stats.stat_name FROM submission
+            JOIN stats ON submission.stat_id = stats.stat_id
+            WHERE submission.player_id = ?""", (player_id,))
+    x = c.fetchall()
+    new_stats = {stat_name: value for value, stat_name in x}
+    print(x)
+    print(new_stats)
+    new_stats['Age'] = 12
+    print(new_stats)
+    for stat_name, value in new_stats.items():
+        c.execute("""
+            UPDATE submission
+            SET stat_value = ?
+            WHERE player_id = ? AND stat_id = (
+                SELECT stat_id FROM stats WHERE stat_name = ?
+            )
+        """, (value, player_id, stat_name))
 
-user = User()
-
-def welcome():
-    st.title("Welcome")
-    st.write(f"Hello, **{st.session_state.user_name}** 👋")
-
-
-def page1():
-    st.title("Welcome")
-    user = User()
-    stats_filled = user.input_stats()
-    player_created = user.create_a_new_player()
-
-    if stats_filled and player_created:
-        import Realwork as rw  # Assuming this has FORWARD_STATS etc.
-
-        # Select position (optional)
-        position = st.selectbox("Select Position", ["Forward", "Midfielder", "Defender", "Goalkeeper"])
-
-        # Create the player based on selected position
-        if position == "Forward":
-            player = Forward()
-        elif position == "Midfielder":
-            player = Midfielder()
-        elif position == "Defender":
-            player = Defender()
-        else:
-            player = Goalkeeper()
-
-        rating = player.get_rating(user.stats)
-        st.success(f"{user.player_name}'s Rating: {rating:.2f}")
-
-        # Store in DB
-        everything = Everything(user_id=1, player_id=user.player_id, rating=rating)  # Assuming user_id=1 for demo
-        everything.store()
-
-
-def page2():
-    st.title("Page 2")
-    st.write("This is Page 2 content.")
+    player_id = 59
+    c.execute("""SELECT submission.stat_value,
+            stats.stat_name FROM submission
+            JOIN stats ON submission.stat_id = stats.stat_id
+            WHERE submission.player_id = ?""", (player_id,))
+    x = c.fetchall()
+    new_stats = {stat_name: value for value, stat_name in x}
+    print(x)
+    conn.commit()

@@ -1,10 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import sqlite3
-import math
-
-from websockets.sync.router import route
-
-import Realwork as rw  # module with stat list and weight dicts
 from player_class import Forward, Midfielder, Defender, Goalkeeper, Everything
 
 app = Flask(__name__)
@@ -19,23 +14,23 @@ def get_db_connection():
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
-    msg = ''
+    msg = request.args.get('msg')
     if request.method == 'POST':
-        username = request.form.get('username')
+        user_name = request.form.get('username')
         user_id = request.form.get('user_id')
 
-        if not username or not user_id:
+        if not user_name or not user_id:
             msg = "Please enter both username and user ID."
             return render_template('index.html', msg=msg)
 
         conn = sqlite3.connect("general.db")
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM user WHERE user_name = ? AND user_id = ?", (username, user_id))
+        cursor.execute("SELECT * FROM user WHERE user_name = ? AND user_id = ?", (user_name, user_id))
         user = cursor.fetchone()
         conn.close()
 
         if user:
-            session['username'] = username
+            session['username'] = user_name
             session['user_id'] = user_id
             return redirect(url_for('home'))
         else:
@@ -45,21 +40,32 @@ def login():
 
 @app.route('/logged_in')
 def home():
+    user_id = session['user_id']
     conn = sqlite3.connect('general.db')
     conn.row_factory = sqlite3.Row
     cursor = conn.cursor()
 
-    function =cursor.execute('''
-        SELECT rating.rating_id,user.user_name, player.player_name, rating.rating_value
-        FROM rating
-        JOIN user ON rating.user_id = user.user_id
-        JOIN player ON rating.player_id = player.player_id
-    ''')
+    # function =cursor.execute('''
+    #     SELECT rating.rating_id,user.user_name, player.player_name, rating.rating_value
+    #     FROM rating
+    #     JOIN user ON rating.user_id = user.user_id
+    #     JOIN player ON rating.player_id = player.player_id
+    # ''')
+    cursor.execute('''
+            SELECT rating.rating_id, user.user_name, player.player_name, rating.rating_value,player.player_id
+            FROM rating
+            JOIN user ON rating.user_id = user.user_id
+            JOIN player ON rating.player_id = player.player_id
+            WHERE rating.user_id = ?
+        ''', (user_id,))
     ratings = cursor.fetchall()
+    cursor.execute("SELECT player_id FROM submission")
+    player_id = cursor.fetchall()
     conn.close()
 
-    return render_template('dashboard.html', ratings=ratings,name=session['username'],
-                           function = function)
+    return render_template('dashboard.html', ratings=ratings,name=session['username'],player_id =
+                           player_id
+                           )
 
 
 @app.route("/delete_rating", methods=["POST"])
@@ -73,7 +79,7 @@ def delete_rating():
     conn.commit()
     conn.close()
 
-    return redirect(url_for('home'))  # or dashboard if that’s your route
+    return redirect(url_for('home'))
 
 
 # make sure 'dashboard' exists too
@@ -101,6 +107,7 @@ def register():
             msg = "Username already exists!"
             user_id = existing_user[0]  # existing user_id
             conn.close()
+            #return redirect(url_for('login', msg=msg, user_id=existing_user[0]))
             return render_template('register.html', msg=msg, new_id=user_id)
         else:
             cursor.execute("INSERT INTO user (user_name) VALUES (?)", (username,))
@@ -110,14 +117,12 @@ def register():
             session['user_id'] = user_id
             msg = f"Your user ID is {user_id}"
             conn.close()
-            return render_template('index.html', new_id=user_id, msg=msg)
+            return redirect(url_for('login', new_id=user_id, msg=msg))
+            #return render_template('index.html', new_id=user_id, msg=msg)
 
 
     return render_template('register.html', msg=msg, new_id=None)
 
-@app.route("/edit_player",methods =["GET","POST"])
-def edit_player():
-    pass
 
 @app.route("/create_player", methods=["GET", "POST"])
 def create_player():
@@ -134,11 +139,11 @@ def create_player():
     player_name = None
 
     if request.method == 'POST':
-        # ✅ Get player name and position
+
         player_name = request.form.get('playername')
         selected_position = request.form.get('position')
 
-        # ✅ Get all stat values
+
         for s in stat:
             value = request.form.get(s)
             if value:
@@ -147,7 +152,7 @@ def create_player():
                 except ValueError:
                     continue  # skip invalid inputs
 
-        # ✅ Create correct player object and calculate rating
+
         user = None
         if selected_position == "Forward":
             user = Forward()
@@ -162,20 +167,20 @@ def create_player():
             user.player_name = player_name
             rating = user.get_rating(stat_dict)
 
-            # ✅ Connect to DB
+
             conn = sqlite3.connect("general.db")
             cursor = conn.cursor()
 
-            # ✅ Insert player into player table
+
             cursor.execute("INSERT INTO player (player_name) VALUES (?)", (player_name,))
             conn.commit()
             player_id = cursor.lastrowid
 
-            # ✅ Store the rating
+
             entry = Everything(user_id=user_id, player_id=player_id, rating=rating)
             entry.store()
 
-            # ✅ Store each stat in the submission table
+
             for stat_name, stat_val in stat_dict.items():
                 # Lookup stat_id from stats table
                 cursor.execute("SELECT stat_id FROM stats WHERE stat_name = ?", (stat_name,))
@@ -189,6 +194,8 @@ def create_player():
 
             conn.commit()
             conn.close()
+        return redirect(url_for('home'))
+
 
     return render_template('create_player.html',
                            stat=stat,
@@ -197,6 +204,19 @@ def create_player():
                            positions=positions,
                            rating=rating,
                            player_name=player_name)
+
+
+@app.route("/edit_player", methods=["GET","POST"])
+def edit_player():
+    from dd import get_player_from_db
+    player_id = request.args.get("player_id")
+    stats_to_update = get_player_from_db(player_id)
+    return render_template("edit_player.html", player_id=player_id, stats_to_update=
+        stats_to_update)
+
+
+
+ # call the function, but only inside a route
 
 
 if __name__ == '__main__':

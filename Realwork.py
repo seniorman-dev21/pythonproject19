@@ -119,3 +119,6 @@ GOALKEEPER_STATS = {
     "Yellow cards": -0.017251,
     "Fouls": -0.009984
 }
+
+
+stats_fbref = ["1_level_0_Age","6_level_0_MP"]
