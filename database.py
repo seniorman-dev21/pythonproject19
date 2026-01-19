@@ -64,31 +64,3 @@ conn.close()
 
 
 
-import sqlite3
-
-def show_all_users(db_file='general.db'):
-    conn = sqlite3.connect(db_file)
-    c = conn.cursor()
-
-    # Make sure the user table exists
-    c.execute("SELECT name FROM sqlite_master WHERE type='table' AND name='user'")
-    if not c.fetchone():
-        print("No 'user' table found in the database.")
-        conn.close()
-        return
-
-    # Fetch and display all users
-    c.execute("SELECT user_id, user_name FROM user")
-    rows = c.fetchall()
-
-    if rows:
-        print("List of users:")
-        for row in rows:
-            print(f"ID: {row[0]}, Username: {row[1]}")
-    else:
-        print("No users found in the database.")
-
-    conn.close()
-
-# Call the function
-show_all_users()

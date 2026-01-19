@@ -208,11 +208,20 @@ def create_player():
 
 @app.route("/edit_player", methods=["GET","POST"])
 def edit_player():
-    from dd import get_player_from_db
-    player_id = request.args.get("player_id")
-    stats_to_update = get_player_from_db(player_id)
-    return render_template("edit_player.html", player_id=player_id, stats_to_update=
-        stats_to_update)
+    user_id = session.get('user_id')
+
+    pass
+
+
+
+@app.route("/logged_in", methods=["GET","POST"])
+def search_player_html():
+    if request.method == 'POST':
+        player_name = request.form.get('playername')
+
+
+
+
 
 
 

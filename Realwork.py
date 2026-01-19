@@ -121,4 +121,3 @@ GOALKEEPER_STATS = {
 }
 
 
-stats_fbref = ["1_level_0_Age","6_level_0_MP"]

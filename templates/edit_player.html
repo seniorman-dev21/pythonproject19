@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <form method="POST" action="/create_player">
+    <input type="text" name="playername" placeholder="Enter player name" required>
+    <label for="position">Choose Position:</label><br>
+    <select name="position" id="position">
+      {% for pos in positions %}
+        <option value="{{ pos }}">{{ pos }}</option>
+      {% endfor %}
+    </select><br><br>
+    {% for s in stat %}
+      <label for="{{ s }}"><strong>{{ s.capitalize() }}</strong></label><br>
+      <input type="number" id="{{ s }}" name="{{ s }}" placeholder="{{ s }}" min="0"><br><br>
+    {% endfor %}
+    <input type="submit" value="Submit">
+  </form>
+</body>
+</html>
