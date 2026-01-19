@@ -161,7 +161,7 @@ everything_together(st)
 
 
 d=data[['Saves', 'Clean sheets']].corr()
-print(d)
+print(d,"final")
 
 
 
